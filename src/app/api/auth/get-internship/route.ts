@@ -4,29 +4,21 @@ import Internship from "@/models/Internship";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-export async function GET(req: Request) {
+export async function GET() {
   await connectDB();
 
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
   if (!token) {
-    return NextResponse.json({ enrolled: false });
+    return NextResponse.json({ error: "Not logged in" }, { status: 401 });
   }
 
   const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
 
-  const url = new URL(req.url);
-  const role = url.searchParams.get("role");
-
   const internship = await Internship.findOne({
-  email: decoded.email,
-  role,
-});
+    email: decoded.email,
+  });
 
-  if (!internship) {
-    return NextResponse.json({ enrolled: false });
-  }
-
-  return NextResponse.json({ enrolled: true });
+  return NextResponse.json({ internship });
 }

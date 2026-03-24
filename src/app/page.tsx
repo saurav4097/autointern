@@ -81,10 +81,10 @@ export default function Home() {
 
           {[
             { name: "AI / ML Role", slug: "ai" },
-            { name: "Web Development", slug: "Web Development" },
-            { name: "App Development", slug: "App Development" },
-            { name: "Coding Role", slug: "Coding Role" },
-            { name: "Cloud Role", slug: "Cloud Role" }
+            { name: "Web Development", slug: "web" },
+            { name: "App Development", slug: "app" },
+            { name: "Coding Role", slug: "coding" },
+            { name: "Cloud Role", slug: "cloud" }
           ].map((role, index) => (
             <button
               key={index}
