@@ -12,7 +12,7 @@ export default function WebDevelopment() {
   const [text, setText] = useState("");
   const [file1, setFile1] = useState<File | null>(null);
   const [file2, setFile2] = useState<File | null>(null);
-  const role ="web";
+  const role="cloud";
   // 🔹 FETCH DATA
   useEffect(() => {
     const fetchData = async () => {
@@ -73,7 +73,7 @@ export default function WebDevelopment() {
     if (submissions[project]) return;
 
     const formData = new FormData();
-    formData.append("role", "web");
+    formData.append("role", "analyst");
     formData.append("task", project);
     formData.append("text", text);
     if (file1) formData.append("file1", file1);
@@ -133,7 +133,7 @@ export default function WebDevelopment() {
 
               <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold">
-                  🚀 Project 1: e-commerce codebase
+                  🚀 Project 1: Data-Science-Project (Absenteeism)
                 </h2>
                 <span className="text-sm text-red-500 font-semibold">
                   {timeLeft}
@@ -151,7 +151,7 @@ export default function WebDevelopment() {
 
               {/* TASK STEPS */}
               <div className="mt-6 space-y-3">
-                {["Add Product Review System", "Implement Search + Filter System", "Improve Authentication + Protected Routes"].map((t, i) => (
+                {["Data Cleaning + Pipeline Standardization", "SQL Integration + Data Storage", "Model Improvement + Evaluation"].map((t, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center text-sm">
                       {i + 1}
@@ -202,7 +202,7 @@ export default function WebDevelopment() {
 
               <div className="flex justify-between">
                 <h2 className="text-2xl font-bold">
-                  💻 Project 2: Car Rental project
+                  💻 Project 2: Data Science Project (Transport + Geo Data)
                 </h2>
                 <span className="text-sm text-red-500 font-semibold">
                   {timeLeft}
@@ -214,7 +214,7 @@ export default function WebDevelopment() {
               </p>
 
               <div className="mt-6 space-y-3">
-                {["Advanced Car Filter System", "Booking System Enhancement", "Authentication UI Flow"].map((t, i) => (
+                {["Data Integration & Cleaning (Multi-source)", "Exploratory Data Analysis (Deep Insights)", "Geo-Visualization Dashboard"].map((t, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center text-sm">
                       {i + 1}
@@ -251,7 +251,35 @@ export default function WebDevelopment() {
         </div>
       )}
 
-  
+      {/* WEEKLY POPUP */}
+      {showWeeklyPopup && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
+
+          <div className="bg-white p-8 rounded-2xl w-125 shadow-xl">
+
+            <h2 className="text-xl font-bold mb-4">
+              Weekly Discussion
+            </h2>
+
+            <textarea
+              className="w-full border p-3 mb-4"
+              placeholder="Write your progress..."
+            />
+
+            <button
+              onClick={() => {
+                localStorage.setItem(`weekly-${days}`, "done");
+                setShowWeeklyPopup(false);
+              }}
+              className="bg-blue-600 text-white px-4 py-2 rounded"
+            >
+              Submit (Required)
+            </button>
+
+          </div>
+
+        </div>
+      )}
 
     </div>
   );
