@@ -1,12 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FaBell } from "react-icons/fa";
+import { FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
-export default function WebDevelopment() {
+export default function AIRole() {
   const [days, setDays] = useState<number | null>(null);
   const [submissions, setSubmissions] = useState<any>({});
   const [timeLeft, setTimeLeft] = useState("");
-  const [showWeeklyPopup, setShowWeeklyPopup] = useState(false);
+  const [timeLeft1, setTimeLeft1] = useState("");
+const [timeLeft2, setTimeLeft2] = useState("");
   const [notification, setNotification] = useState(false);
 
   const [text, setText] = useState("");
@@ -37,12 +41,7 @@ export default function WebDevelopment() {
 
       if (diff === 15) setNotification(true);
 
-      if ([7, 14, 21, 28].includes(diff)) {
-        const key = `weekly-${diff}`;
-        if (!localStorage.getItem(key)) {
-          setShowWeeklyPopup(true);
-        }
-      }
+     
     };
 
     fetchData();
@@ -50,23 +49,45 @@ export default function WebDevelopment() {
 
   // ⏱️ TIMER
   useEffect(() => {
-    if (days === null) return;
+  if (days === null) return;
+
+  const fetchStartDateAndRunTimer = async () => {
+    const intern = await fetch(`/api/auth/get-internship?role=${role}`).then(r => r.json());
+
+    const start = new Date(intern.internship.startDate);
+
+    // ✅ FIXED END DATE (constant)
+    const end = new Date(start);
+    end.setDate(start.getDate() + 30);
 
     const interval = setInterval(() => {
-      const end = new Date();
-      end.setDate(end.getDate() + (30 - days));
-
       const now = new Date();
       const diff = end.getTime() - now.getTime();
 
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      if (diff <= 0) {
+        setTimeLeft1("0d 0h left");
+        setTimeLeft2("0d 0h left");
+        return;
+      }
 
-      setTimeLeft(`${d}d ${h}h left`);
+      const totalHours = Math.floor(diff / (1000 * 60 * 60));
+      const d = Math.floor(totalHours / 24);
+      const h = totalHours % 24;
+
+      // Project 2
+      setTimeLeft2(`${d}d ${h}h left`);
+
+      // Project 1 (20 days total)
+      const d1 = Math.max(d - 10, 0);
+      setTimeLeft1(`${d1}d ${h}h left`);
+
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [days]);
+  };
+
+  fetchStartDateAndRunTimer();
+}, [days]);
 
   // 🟢 SUBMIT PROJECT
   const submitProject = async (project: string) => {
@@ -107,21 +128,46 @@ export default function WebDevelopment() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 p-8">
+    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 ">
 
-      {/* NAVBAR */}
-      <div className="flex justify-between items-center mb-12">
-        <h1 className="text-3xl font-extrabold tracking-tight">
-          auto<span className="text-green-600">intern</span>
-        </h1>
+    
+{/* NAVBAR */}
+      <nav className="w-full flex items-center justify-between px-6 md:px-12 py-4 border-b bg-white/80 backdrop-blur sticky top-0 z-50">
 
-        <div className="relative">
-          <button className="text-2xl">🔔</button>
-          {notification && (
-            <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full"></span>
-          )}
+        <div className="flex items-center gap-2 text-xl font-bold">
+          <img
+  src="/workhatchS.png"
+  alt="Logo"
+  className="w-8 h-8 rounded-full object-cover"
+/>
+          <span>
+            Work<span className="text-green-600">Hatch</span>
+          </span>
         </div>
-      </div>
+
+        <div className="flex items-center gap-6">
+          
+ <div className="relative">
+  <button className="text-xl text-black hover:text-green-500 transition">
+    <FaBell />
+  </button>
+
+  {notification && (
+    <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 border-2 border-white rounded-full"></span>
+  )}
+</div>
+         <button
+  onClick={() => {
+    window.location.href = "/";
+  }}
+  className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition"
+>
+  Back
+</button>
+        </div>
+      </nav>
+
+       
 
       {/* PROJECT CARD COMPONENT */}
       {(days < 20 || days >= 15) && (
@@ -136,7 +182,7 @@ export default function WebDevelopment() {
                   🚀 Project 1: Regression ML Pipeline
                 </h2>
                 <span className="text-sm text-red-500 font-semibold">
-                  {timeLeft}
+                  {timeLeft1}
                 </span>
               </div>
 
@@ -145,8 +191,8 @@ export default function WebDevelopment() {
               </p>
 
               <div className="mt-4 flex gap-6 text-sm">
-                <a href="#" className="text-green-600">GitHub Repo</a>
-                <a href="#" className="text-blue-600">View PDF Guide</a>
+                <a href="https://github.com/anesriad/Regression_ML_EndtoEnd" className="text-green-600">GitHub Repo</a>
+                <a href="/guidesheet.pdf" className="text-blue-600">View PDF Guide</a>
               </div>
 
               {/* TASK STEPS */}
@@ -160,39 +206,66 @@ export default function WebDevelopment() {
                   </div>
                 ))}
               </div>
+              <div className="mt-6 p-6 border rounded-2xl bg-white shadow-sm">
+  <h3 className="text-xl font-semibold text-gray-800 mb-4">
+    Submission Requirements
+  </h3>
 
-              {/* SUBMISSION */}
-              <div className="mt-8 border-t pt-6">
-                <textarea
-                  placeholder="Write your project details..."
-                  className="w-full border p-3 rounded-lg mb-4"
-                  onChange={(e) => setText(e.target.value)}
-                />
+  <ul className="text-gray-600 leading-7 space-y-2">
+    <li>
+      <span className="font-semibold text-gray-800">GitHub Repository:</span>{" "}
+      Submit the link to your repository containing the complete implementation of your work.
+    </li>
+    <li>
+      <span className="font-semibold text-gray-800">Understanding Report (PDF):</span>{" "}
+      Provide a document explaining your understanding of the given base code, including its architecture and workflow.
+    </li>
+    <li>
+      <span className="font-semibold text-gray-800">Work Report (PDF):</span>{" "}
+      Include a detailed report describing the tasks you completed, challenges encountered, and the solutions or technologies used.
+    </li>
+  </ul>
 
-                <input
-                  type="file"
-                  onChange={(e) => setFile1(e.target.files?.[0] || null)}
-                  className="mb-2"
-                />
+  {/* SUBMISSION */}
+  <div className="mt-8 border-t pt-6">
+    <input
+      type="text"
+      placeholder="Enter your GitHub repository link"
+      className="w-full border border-gray-300 p-3 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+      onChange={(e) => setText(e.target.value)}
+    />
 
-                <input
-                  type="file"
-                  onChange={(e) => setFile2(e.target.files?.[0] || null)}
-                  className="mb-4"
-                />
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Upload Understanding Report (PDF)
+    </label>
+    <input
+      type="file"
+      onChange={(e) => setFile1(e.target.files?.[0] || null)}
+      className="w-full mb-4"
+    />
 
-                <button
-                  disabled={submissions["project1"]}
-                  onClick={() => submitProject("project1")}
-                  className={`w-full py-3 rounded-xl ${
-                    submissions["project1"]
-                      ? "bg-gray-400"
-                      : "bg-green-600 text-white hover:bg-green-500"
-                  }`}
-                >
-                  {submissions["project1"] ? "Submitted" : "Submit Project"}
-                </button>
-              </div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Upload Work Report (PDF)
+    </label>
+    <input
+      type="file"
+      onChange={(e) => setFile2(e.target.files?.[0] || null)}
+      className="w-full mb-4"
+    />
+
+    <button
+      disabled={submissions["project1"]}
+      onClick={() => submitProject("project1")}
+      className={`w-full py-3 rounded-xl font-medium transition ${
+        submissions["project1"]
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-green-600 text-white hover:bg-green-500"
+      }`}
+    >
+      {submissions["project1"] ? "Submitted" : "Submit Project"}
+    </button>
+  </div>
+</div>
             </div>
           )}
 
@@ -205,13 +278,17 @@ export default function WebDevelopment() {
                   💻 Project 2: Diabetes Prediction App
                 </h2>
                 <span className="text-sm text-red-500 font-semibold">
-                  {timeLeft}
+                  {timeLeft2}
                 </span>
               </div>
 
               <p className="mt-4 text-gray-600">
                 Build a full stack application using Next.js + MongoDB.
               </p>
+                 <div className="mt-4 flex gap-6 text-sm">
+                <a href="https://github.com/ditikrushna/End-to-End-Diabetes-Prediction-Application-Using-Machine-Learning" className="text-green-600">GitHub Repo</a>
+                <a href="/guidesheet.pdf" className="text-blue-600">View PDF Guide</a>
+              </div>
 
               <div className="mt-6 space-y-3">
                 {["Replace Model with Better Algorithm", "Add Input Validation & Error Handling", "Convert App into API"].map((t, i) => (
@@ -224,62 +301,101 @@ export default function WebDevelopment() {
                 ))}
               </div>
 
-              <div className="mt-8 border-t pt-6">
-                <textarea
-                  placeholder="Explain your project..."
-                  className="w-full border p-3 rounded-lg mb-4"
-                  onChange={(e) => setText(e.target.value)}
-                />
+              <div className="mt-6 p-6 border rounded-2xl bg-white shadow-sm">
+  <h3 className="text-xl font-semibold text-gray-800 mb-4">
+    Submission Requirements
+  </h3>
 
-                <input type="file" className="mb-2" />
-                <input type="file" className="mb-4" />
+  <ul className="text-gray-600 leading-7 space-y-2">
+    <li>
+      <span className="font-semibold text-gray-800">GitHub Repository:</span>{" "}
+      Submit the link to your repository containing the complete implementation of your work.
+    </li>
+    <li>
+      <span className="font-semibold text-gray-800">Understanding Report (PDF):</span>{" "}
+      Provide a document explaining your understanding of the given base code, including its architecture and workflow.
+    </li>
+    <li>
+      <span className="font-semibold text-gray-800">Work Report (PDF):</span>{" "}
+      Include a detailed report describing the tasks you completed, challenges encountered, and the solutions or technologies used.
+    </li>
+  </ul>
 
-                <button
-                  disabled={submissions["project2"]}
-                  onClick={() => submitProject("project2")}
-                  className={`w-full py-3 rounded-xl ${
-                    submissions["project2"]
-                      ? "bg-gray-400"
-                      : "bg-green-600 text-white hover:bg-green-500"
-                  }`}
-                >
-                  {submissions["project2"] ? "Submitted" : "Submit Project"}
-                </button>
-              </div>
+  {/* SUBMISSION */}
+  <div className="mt-8 border-t pt-6">
+    <input
+      type="text"
+      placeholder="Enter your GitHub repository link"
+      className="w-full border border-gray-300 p-3 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+      onChange={(e) => setText(e.target.value)}
+    />
+
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Upload Understanding Report (PDF)
+    </label>
+    <input
+      type="file"
+      onChange={(e) => setFile1(e.target.files?.[0] || null)}
+      className="w-full mb-4"
+    />
+
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Upload Work Report (PDF)
+    </label>
+    <input
+      type="file"
+      onChange={(e) => setFile2(e.target.files?.[0] || null)}
+      className="w-full mb-4"
+    />
+
+    <button
+      disabled={submissions["project2"]}
+      onClick={() => submitProject("project2")}
+      className={`w-full py-3 rounded-xl font-medium transition ${
+        submissions["project2"]
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-green-600 text-white hover:bg-green-500"
+      }`}
+    >
+      {submissions["project2"] ? "Submitted" : "Submit Project"}
+    </button>
+  </div>
+</div>
             </div>
           )}
         </div>
       )}
+    
 
-      {/* WEEKLY POPUP */}
-      {showWeeklyPopup && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
 
-          <div className="bg-white p-8 rounded-2xl w-125 shadow-xl">
+      {/* FOOTER */}
+       <footer className="w-full bg-gray-900 text-white mt-10">
+  <div className="max-w-6xl mx-auto px-6 py-12 text-center">
 
-            <h2 className="text-xl font-bold mb-4">
-              Weekly Discussion
-            </h2>
+    {/* LOGO / NAME */}
+    <h3 className="text-xl font-semibold mb-3">
+      Work<span className="text-green-500">Hatch</span>
+    </h3>
 
-            <textarea
-              className="w-full border p-3 mb-4"
-              placeholder="Write your progress..."
-            />
+    <p className="text-gray-400 text-sm mb-6">
+      Building real skills through real work.
+    </p>
 
-            <button
-              onClick={() => {
-                localStorage.setItem(`weekly-${days}`, "done");
-                setShowWeeklyPopup(false);
-              }}
-              className="bg-blue-600 text-white px-4 py-2 rounded"
-            >
-              Submit (Required)
-            </button>
+    {/* ICONS */}
+    <div className="flex justify-center gap-6 text-xl mb-6">
+      <a href="#" className="hover:text-green-400 transition"><FaLinkedin /></a>
+      <a href="#" className="hover:text-green-400 transition"><FaInstagram /></a>
+      <a href="#" className="hover:text-green-400 transition"><FaXTwitter /></a>
+      <a href="#" className="hover:text-green-400 transition"><FaYoutube /></a>
+    </div>
 
-          </div>
+    {/* DIVIDER */}
+    <div className="border-t border-gray-700 pt-6 text-xs text-gray-500">
+      © {new Date().getFullYear()} WorkHatch. All rights reserved.
+    </div>
 
-        </div>
-      )}
+  </div>
+</footer>
 
     </div>
   );
