@@ -382,8 +382,8 @@ export default function AnalystRole() {
 
     {/* ICONS */}
     <div className="flex justify-center gap-6 text-xl mb-6">
-      <a href="#" className="hover:text-green-400 transition"><FaLinkedin /></a>
-      <a href="#" className="hover:text-green-400 transition"><FaInstagram /></a>
+       <a href="https://www.linkedin.com/company/workhatch/" className="hover:text-green-400"><FaLinkedin /></a>
+          <a href="https://www.instagram.com/theworkhatch/" className="hover:text-green-400"><FaInstagram /></a>
       <a href="#" className="hover:text-green-400 transition"><FaXTwitter /></a>
       <a href="#" className="hover:text-green-400 transition"><FaYoutube /></a>
     </div>

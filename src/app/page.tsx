@@ -188,8 +188,8 @@ export default function Home() {
         {/* ICONS */}
         <div className="flex justify-center gap-6 text-xl">
 
-          <a href="#" className="hover:text-green-400"><FaLinkedin /></a>
-          <a href="#" className="hover:text-green-400"><FaInstagram /></a>
+          <a href="https://www.linkedin.com/company/workhatch/" className="hover:text-green-400"><FaLinkedin /></a>
+          <a href="https://www.instagram.com/theworkhatch/" className="hover:text-green-400"><FaInstagram /></a>
           <a href="#" className="hover:text-green-400"><FaXTwitter /></a>
           <a href="#" className="hover:text-green-400"><FaYoutube /></a>
 

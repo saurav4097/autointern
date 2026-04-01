@@ -160,10 +160,10 @@ export default function WorkHatchPage() {
 
         {/* Socials */}
         <div className="flex gap-6 justify-center mt-6">
-          <a href="#" target="_blank">
+          <a href="https://www.instagram.com/theworkhatch/" target="_blank">
             <FaInstagram className="text-pink-500 text-2xl hover:scale-110 transition" />
           </a>
-          <a href="#" target="_blank">
+          <a href="https://www.linkedin.com/company/workhatch/" target="_blank">
             <FaLinkedin className="text-blue-600 text-2xl hover:scale-110 transition" />
           </a>
         </div>
