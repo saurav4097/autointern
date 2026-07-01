@@ -22,6 +22,7 @@ export async function GET(req: Request) {
   const internship = await Internship.findOne({
   email: decoded.email,
   role,
+  isSubscribed: true,
 });
 
   if (!internship) {

@@ -135,19 +135,19 @@ const [timeLeft2, setTimeLeft2] = useState("");
 
         <div className="flex items-center gap-2 text-xl font-bold">
           <img
-  src="/workhatchS.png"
+  src="/orove.png"
   alt="Logo"
   className="w-8 h-8 rounded-full object-cover"
 />
-          <span>
-            Work<span className="text-green-600">Hatch</span>
+          <span className="text-blue-600">
+           OROVE
           </span>
         </div>
 
         <div className="flex items-center gap-6">
           
  <div className="relative">
-  <button className="text-xl text-black hover:text-green-500 transition">
+  <button className="text-xl text-black hover:text-blue-500 transition">
     <FaBell />
   </button>
 
@@ -373,7 +373,7 @@ const [timeLeft2, setTimeLeft2] = useState("");
 
     {/* LOGO / NAME */}
     <h3 className="text-xl font-semibold mb-3">
-      Work<span className="text-green-500">Hatch</span>
+      <span className="text-white-500">OROVE</span>
     </h3>
 
     <p className="text-gray-400 text-sm mb-6">
@@ -382,15 +382,15 @@ const [timeLeft2, setTimeLeft2] = useState("");
 
     {/* ICONS */}
     <div className="flex justify-center gap-6 text-xl mb-6">
-     <a href="https://www.linkedin.com/company/workhatch/" className="hover:text-green-400"><FaLinkedin /></a>
-          <a href="https://www.instagram.com/theworkhatch/" className="hover:text-green-400"><FaInstagram /></a>
+     <a href="#" className="hover:text-green-400"><FaLinkedin /></a>
+          <a href="#" className="hover:text-green-400"><FaInstagram /></a>
       <a href="#" className="hover:text-green-400 transition"><FaXTwitter /></a>
       <a href="#" className="hover:text-green-400 transition"><FaYoutube /></a>
     </div>
 
     {/* DIVIDER */}
     <div className="border-t border-gray-700 pt-6 text-xs text-gray-500">
-      © {new Date().getFullYear()} WorkHatch. All rights reserved.
+      © {new Date().getFullYear()} OROVE. All rights reserved.
     </div>
 
   </div>

@@ -9,7 +9,8 @@ export default function Home() {
   const router = useRouter();
 
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedRole, setSelectedRole] = useState("");
+const [selectedRole, setSelectedRole] = useState("");
+const [loading, setLoading] = useState(false);
 
   const handleClick = async (role: string) => {
     const res = await fetch("/api/auth/check");
@@ -30,17 +31,94 @@ export default function Home() {
     }
   };
 
-  const confirmInternship = async () => {
-    await fetch("/api/auth/start", {
+  const proceedToPayment = async () => {
+    setLoading(true);
+  try {
+    const response = await fetch("/api/payment/create-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ role: selectedRole }),
+      body: JSON.stringify({
+        role: selectedRole,
+      }),
     });
 
-    router.push(`/roles/${selectedRole}`);
-  };
+    const data = await response.json();
+
+    if (!data.success) {
+  setLoading(false);
+  alert("Failed to create payment order.");
+  return;
+}
+
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+
+      amount: data.order.amount,
+
+      currency: data.order.currency,
+
+      name: "OROVE",
+
+      description: `${selectedRole} Internship`,
+
+      image: "/orove.png",
+
+      order_id: data.order.id,
+
+      theme: {
+        color: "#2563EB",
+      },
+
+     handler: async function (response: any) {
+  const verifyRes = await fetch("/api/payment/verify", {
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+    body: JSON.stringify({
+      razorpay_order_id: response.razorpay_order_id,
+
+      razorpay_payment_id: response.razorpay_payment_id,
+
+      razorpay_signature: response.razorpay_signature,
+
+      role: selectedRole,
+    }),
+  });
+
+  const result = await verifyRes.json();
+
+  if (result.success) {
+  setLoading(false);
+
+  setShowPopup(false);
+
+  router.push(`/roles/${selectedRole}`);
+} else {
+    setLoading(false);
+    alert(result.message);
+  }
+},
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.on("payment.failed", function () {
+  setLoading(false);
+
+  alert("Payment failed or cancelled.");
+});
+
+    paymentObject.open();
+  } catch (error) {
+    console.error(error);
+ setLoading(false);
+    alert("Something went wrong.");
+  }
+};
 
   return (
     <main className="min-h-screen bg-white text-gray-900 flex flex-col">
@@ -50,12 +128,12 @@ export default function Home() {
 
         <div className="flex items-center gap-2 text-xl font-bold">
           <img
-  src="/workhatchS.png"
+  src="/orove.png"
   alt="Logo"
   className="w-8 h-8 rounded-full object-cover"
 />
-          <span>
-            Work<span className="text-green-600">Hatch</span>
+          <span className="text-blue-600">
+           OROVE
           </span>
         </div>
 
@@ -83,17 +161,18 @@ export default function Home() {
 
         {/* BIG BRAND */}
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">
-          Work<span className="text-green-600">Hatch</span>
+          <span className="text-blue-600">OROVE</span>
         </h1>
 
-        <h2 className="mt-6 text-3xl md:text-5xl font-bold leading-tight max-w-3xl">
-          Hatch Your Career with <span className="text-green-600">Real Work</span>
-        </h2>
+        <h2 className="mt-6 text-3xl md:text-5xl font-bold leading-tight max-w-4xl">
+  Gain <span className="text-blue-600">Real Industry Experience</span>, Not Just Another Certificate
+</h2>
 
-        <p className="mt-4 text-lg md:text-xl text-gray-600 max-w-2xl">
-          Work on real company projects, build proof of skills, and get hired —
-          without rejections or referrals.
-        </p>
+        <p className="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl">
+  Work on MNC-style tasks and real-world workflows designed to simulate professional environments. 
+  Build practical experience, strengthen your resume with meaningful work, and stand out through your performance. 
+  Outstanding participants may be considered for future startup hiring opportunities.
+</p>
 
       </section>
 
@@ -112,10 +191,10 @@ export default function Home() {
             <div
               key={index}
               onClick={() => handleClick(role.slug)}
-              className="relative cursor-pointer border-2 border-green-500 rounded-2xl p-6 h-40 hover:shadow-xl hover:scale-[1.03] transition bg-white flex flex-col justify-between"
+              className="relative cursor-pointer border-2 border-blue-500 rounded-2xl p-6 h-40 hover:shadow-xl hover:scale-[1.03] transition bg-white flex flex-col justify-between"
             >
               {/* Top Tag */}
-              <span className="absolute top-3 right-3 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
+              <span className="absolute top-3 right-3 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
                 30 Days
               </span>
 
@@ -124,7 +203,7 @@ export default function Home() {
               </h3>
 
               {/* Bottom Tag */}
-              <span className="text-xs text-green-600 font-medium self-end">
+              <span className="text-xs text-blue-600 font-medium self-end">
                 Internship
               </span>
             </div>
@@ -144,9 +223,25 @@ export default function Home() {
               Confirm Internship
             </h2>
 
-            <p className="text-gray-600 mb-6">
-              This internship runs for <b>30 days</b> with real tasks and hands-on experience.
-            </p>
+            <p className="text-gray-600 mb-3">
+  30 Days Internship
+</p>
+
+<p className="text-3xl font-bold text-blue-600 mb-4">
+  ₹999
+</p>
+
+<p className="text-gray-500">
+  Includes:
+</p>
+
+<ul className="text-left mt-4 mb-6 space-y-2">
+  <li> industry-designed</li>
+  <li> Internship Certificate</li>
+  <li> recommendation letter</li>
+  <li> gain valuable industry experience</li>
+  <li> future startup hiring opportunities.</li>
+</ul>
 
             <p className="mb-6 text-gray-500">
               Role: <b>{selectedRole}</b>
@@ -162,11 +257,12 @@ export default function Home() {
               </button>
 
               <button
-                onClick={confirmInternship}
-                className="px-5 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500"
-              >
-                Start
-              </button>
+  onClick={proceedToPayment}
+  disabled={loading}
+  className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 disabled:opacity-60 disabled:cursor-not-allowed"
+>
+  {loading ? "Creating Payment..." : "Proceed to Payment"}
+</button>
 
             </div>
 
@@ -178,7 +274,7 @@ export default function Home() {
       <footer className="w-full bg-gray-900 text-white py-10 px-6 text-center">
 
         <h3 className="text-lg font-semibold mb-4">
-          Work<span className="text-green-500">Hatch</span>
+          OROVE
         </h3>
 
         <p className="mb-6 text-sm text-gray-400">
@@ -188,15 +284,15 @@ export default function Home() {
         {/* ICONS */}
         <div className="flex justify-center gap-6 text-xl">
 
-          <a href="https://www.linkedin.com/company/workhatch/" className="hover:text-green-400"><FaLinkedin /></a>
-          <a href="https://www.instagram.com/theworkhatch/" className="hover:text-green-400"><FaInstagram /></a>
-          <a href="#" className="hover:text-green-400"><FaXTwitter /></a>
-          <a href="#" className="hover:text-green-400"><FaYoutube /></a>
+          <a href="#" className="hover:text-blue-400"><FaLinkedin /></a>
+          <a href="#" className="hover:text-blue-400"><FaInstagram /></a>
+          <a href="#" className="hover:text-blue-400"><FaXTwitter /></a>
+          <a href="#" className="hover:text-blue-400"><FaYoutube /></a>
 
         </div>
 
         <p className="mt-6 text-xs text-gray-500">
-          © {new Date().getFullYear()} WorkHatch. All rights reserved.
+          © {new Date().getFullYear()} OROVE. All rights reserved.
         </p>
 
       </footer>

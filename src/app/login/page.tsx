@@ -39,7 +39,7 @@ export default function LoginPage() {
       <div className="w-96 border rounded-xl p-8 shadow">
 
         <h1 className="text-3xl font-bold mb-6 text-center">
-          Login to <span className="text-green-600">AutoIntern</span>
+          Login to <span className="text-blue-600">OROVE</span>
         </h1>
 
         <input
@@ -52,7 +52,7 @@ export default function LoginPage() {
 
         <button
           onClick={handleLogin}
-          className="w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded font-semibold"
+          className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded font-semibold"
         >
           Login
         </button>
@@ -61,7 +61,7 @@ export default function LoginPage() {
           Don’t have an account?{" "}
           <span
             onClick={() => router.push("/signup")}
-            className="text-green-600 cursor-pointer"
+            className="text-blue-600 cursor-pointer"
           >
             Sign Up
           </span>

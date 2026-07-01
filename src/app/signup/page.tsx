@@ -38,7 +38,7 @@ export default function SignupPage() {
       <div className="w-96 border rounded-xl p-8 shadow">
 
         <h1 className="text-3xl font-bold mb-6 text-center">
-          Signup to <span className="text-green-600">AutoIntern</span>
+          Signup to <span className="text-blue-600">OROVE</span>
         </h1>
 
         <input
@@ -59,7 +59,7 @@ export default function SignupPage() {
 
         <button
           onClick={handleSignup}
-          className="w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded font-semibold"
+          className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded font-semibold"
         >
           Sign Up
         </button>
@@ -68,7 +68,7 @@ export default function SignupPage() {
           Already have an account?{" "}
           <span
             onClick={() => router.push("/login")}
-            className="text-green-600 cursor-pointer"
+            className="text-blue-600 cursor-pointer"
           >
             Login
           </span>
