@@ -220,11 +220,11 @@ const [loading, setLoading] = useState(false);
           <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-2xl text-center">
 
             <h2 className="text-2xl font-bold mb-4">
-              Confirm Internship
+               Confirm Enrollment
             </h2>
 
             <p className="text-gray-600 mb-3">
-  30 Days Internship
+  30-Day Internship Program
 </p>
 
 <p className="text-3xl font-bold text-blue-600 mb-4">
@@ -236,11 +236,11 @@ const [loading, setLoading] = useState(false);
 </p>
 
 <ul className="text-left mt-4 mb-6 space-y-2">
-  <li> industry-designed</li>
-  <li> Internship Certificate</li>
-  <li> recommendation letter</li>
-  <li> gain valuable industry experience</li>
-  <li> future startup hiring opportunities.</li>
+  <li>• Industry-inspired project tasks</li>
+  <li>• Internship Certificate of Completion</li>
+  <li>• Letter of Recommendation (based on performance)</li>
+  <li>• Practical industry experience through guided projects</li>
+  <li>• Opportunity to be considered for future startup hiring through WorkHatch</li>
 </ul>
 
             <p className="mb-6 text-gray-500">

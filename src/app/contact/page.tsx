@@ -60,68 +60,54 @@ export default function WorkHatchPage() {
           <span className="text-blue-600">OROVE</span>
         </h1>
         <p className="text-lg text-gray-600 leading-7">
-  OROVE helps students gain real industry experience through structured
-  internships inspired by the workflows of modern companies. Instead of
-  completing random practice assignments, participants work on realistic
-  projects, solve practical business problems, and develop the skills
-  companies expect from job-ready candidates.
+  OROVE helps students and aspiring professionals gain real industry experience through structured Internship Experience Programs inspired by the workflows of modern companies. Instead of completing random practice assignments, participants work on realistic projects, solve practical business problems, and develop the skills companies expect from job-ready candidates.
 </p>
       </header>
 
       {/* About Section */}
-      <section className="bg-gray-100 shadow-lg rounded-2xl p-6 max-w-3xl w-full mb-10">
-        <h2 className="text-2xl font-semibold text-blue-600 mb-4">
-          What We Do
-        </h2>
-        <p className="text-gray-700 leading-7 mb-4">
-  Every internship at OROVE is designed to simulate how real engineering
-  and product teams work. Participants receive structured tasks, project
-  requirements, deadlines, and workflows that closely resemble those used
-  in professional companies.
-</p>
+     <section className="bg-gray-100 shadow-lg rounded-2xl p-6 max-w-3xl w-full mb-10">
+  <h2 className="text-2xl font-semibold text-blue-600 mb-4">
+    What We Do
+  </h2>
 
-<p className="text-gray-700 leading-7 mb-4">
-  Rather than spending weeks on artificial exercises, students build
-  practical experience by working on realistic projects that strengthen
-  technical skills, problem-solving ability, communication, and
-  professional thinking.
-</p>
+  <p className="text-gray-700 leading-7 mb-4">
+    Every Internship Experience Program at OROVE is designed to simulate how real engineering and product teams work. Participants receive structured project tasks, requirements, deadlines, and professional workflows that closely resemble those used in modern companies.
+  </p>
 
-<p className="text-gray-700 leading-7">
-  Upon successful completion, participants receive an internship
-  certificate that demonstrates verified practical experience, helping
-  them build a stronger resume and stand out during internship and job
-  applications.
-</p>
-      </section>
+  <p className="text-gray-700 leading-7 mb-4">
+    Rather than spending weeks on artificial exercises, participants build practical skills by working on realistic projects that strengthen technical knowledge, problem-solving, communication, and professional thinking.
+  </p>
+
+  <p className="text-gray-700 leading-7">
+    Upon successful completion, participants receive an Internship Certificate of Completion that reflects their project-based learning experience, helping them strengthen their resume and prepare confidently for future internship and job opportunities.
+  </p>
+</section>
 
       {/* Opportunities Section */}
       <section className="bg-gray-100 shadow-lg rounded-2xl p-6 max-w-3xl w-full mb-10">
-        <h2 className="text-2xl font-semibold text-blue-600 mb-4">
-          Opportunities & Impact
-        </h2>
+  <h2 className="text-2xl font-semibold text-blue-600 mb-4">
+    Opportunities & Impact
+  </h2>
 
-        <ul className="space-y-3 text-gray-700">
-  <li>• Experience internships designed around real company workflows</li>
-  <li>• Complete practical tasks instead of theoretical assignments</li>
-  <li>• Develop industry-ready technical and problem-solving skills</li>
-  <li>• Build a portfolio based on meaningful project work</li>
-  <li>• Earn an internship certificate that strengthens your resume</li>
-  <li>• Prepare confidently for internships and full-time job opportunities</li>
-</ul>
-      </section>
+  <ul className="space-y-3 text-gray-700">
+    <li>• Experience internship programs inspired by real company workflows</li>
+    <li>• Complete practical projects instead of theoretical assignments</li>
+    <li>• Develop industry-ready technical and problem-solving skills</li>
+    <li>• Build a portfolio through meaningful project work</li>
+    <li>• Earn an Internship Certificate of Completion</li>
+    <li>• Prepare confidently for future internships and full-time job opportunities</li>
+  </ul>
+</section>
 
       {/* Contact Section */}
-      <section className="bg-gray-100 shadow-lg rounded-2xl p-6 max-w-3xl w-full">
-        <h2 className="text-2xl font-semibold text-blue-600 mb-4">
-          Contact & Support
-        </h2>
+     <section className="bg-gray-100 shadow-lg rounded-2xl p-6 max-w-3xl w-full">
+  <h2 className="text-2xl font-semibold text-blue-600 mb-4">
+    Contact & Support
+  </h2>
 
-       <p className="text-gray-700 mb-6 leading-7">
-  Have questions about our internships, learning experience, certificates,
-  or anything else? Send us your query and our team will get back to you
-  as soon as possible.
-</p>
+  <p className="text-gray-700 mb-6 leading-7">
+    Have questions about our Internship Experience Programs, certificates, project workflows, or anything else? Send us your query, and our team will get back to you as soon as possible.
+  </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
