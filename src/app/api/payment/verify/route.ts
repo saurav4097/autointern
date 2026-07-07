@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
 
       role,
 
-      amount: 999,
+      amount: 799,
 
       isSubscribed: true,
 

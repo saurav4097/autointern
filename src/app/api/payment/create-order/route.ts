@@ -53,13 +53,13 @@ if (!user) {
     }
 
     const options = {
-      amount: 999 * 100, // ₹999 -> paise
+      amount: 799 * 100, // ₹799 -> paise
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
       notes: {
         role,
       },
-    };
+    }; 
 
     const order = await razorpay.orders.create(options);
 

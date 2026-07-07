@@ -217,56 +217,89 @@ const [loading, setLoading] = useState(false);
       {showPopup && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center px-4">
 
-          <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-2xl text-center">
+          <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden">
 
-            <h2 className="text-2xl font-bold mb-4">
-               Confirm Enrollment
-            </h2>
+  {/* Offer Banner */}
+  <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-center py-3">
+    <p className="text-sm font-semibold">
+       Launch Offer • Save ₹200
+    </p>
+  </div>
 
-            <p className="text-gray-600 mb-3">
-  30-Day Internship Program
-</p>
+  <div className="p-6">
 
-<p className="text-3xl font-bold text-blue-600 mb-4">
-  ₹999
-</p>
+    <h2 className="text-2xl font-bold text-center">
+      Confirm Enrollment
+    </h2>
 
-<p className="text-gray-500">
-  Includes:
-</p>
+    <p className="text-gray-500 text-center mt-1">
+      30-Day Internship Program
+    </p>
 
-<ul className="text-left mt-4 mb-6 space-y-2">
-  <li>• Industry-inspired project tasks</li>
-  <li>• Internship Certificate of Completion</li>
-  <li>• Letter of Recommendation (based on performance)</li>
-  <li>• Practical industry experience through guided projects</li>
-  <li>• Opportunity to be considered for future startup hiring through WorkHatch</li>
-</ul>
+    <p className="text-center text-gray-500 mt-2">
+      Build real industry experience before your first job.
+    </p>
 
-            <p className="mb-6 text-gray-500">
-              Role: <b>{selectedRole}</b>
-            </p>
+    {/* Price */}
+    <div className="flex justify-center items-center gap-3 mt-5">
+      <span className="text-xl text-gray-400 line-through">
+        ₹999
+      </span>
 
-            <div className="flex justify-center gap-4">
+      <span className="text-4xl font-extrabold text-blue-600">
+        ₹799
+      </span>
+    </div>
 
-              <button
-                onClick={() => setShowPopup(false)}
-                className="px-5 py-2 border rounded-lg hover:bg-gray-100"
-              >
-                Back
-              </button>
+    <p className="text-center text-green-600 text-sm font-medium mt-1">
+      Limited Time Price
+    </p>
 
-              <button
-  onClick={proceedToPayment}
-  disabled={loading}
-  className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 disabled:opacity-60 disabled:cursor-not-allowed"
->
-  {loading ? "Creating Payment..." : "Proceed to Payment"}
-</button>
+    {/* Role */}
+    <div className="bg-blue-50 rounded-xl py-3 mt-5 text-center">
+      <p className="text-xs text-gray-500">
+        Selected Program
+      </p>
 
-            </div>
+      <p className="font-semibold text-blue-700">
+        {selectedRole} Internship
+      </p>
+    </div>
 
-          </div>
+    {/* Benefits */}
+    <ul className="mt-5 space-y-2 text-sm text-gray-700">
+      <li>✅ Internship Certificate</li>
+      <li>✅ Letter of Recommendation (Performance Based)</li>
+      <li>✅ Real Industry Workflow Experience</li>
+      <li>✅ Startup Hiring Opportunity via WorkHatch</li>
+    </ul>
+
+    {/* Buttons */}
+    <div className="flex gap-3 mt-6">
+
+      <button
+        onClick={() => setShowPopup(false)}
+        className="flex-1 border rounded-xl py-2.5 hover:bg-gray-100 transition"
+      >
+        Back
+      </button>
+
+      <button
+        onClick={proceedToPayment}
+        disabled={loading}
+        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-2.5 font-semibold transition disabled:opacity-60"
+      >
+        {loading ? "Creating..." : "Enroll • ₹799"}
+      </button>
+
+    </div>
+    <p className="text-xs text-gray-400 text-center mt-5">
+      Secure payment powered by Razorpay.
+    </p>
+
+  </div>
+
+</div>
         </div>
       )}
 
