@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
 
-const InternshipSchema = new mongoose.Schema(
+const InterndataSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
     },
-
-    email: {
+   details: {
       type: String,
       required: true,
     },
@@ -16,30 +15,22 @@ const InternshipSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    
-     referralCode: {
-      type: String,
-      default: "orovenew",
-    },
 
-    amount: {
-      type: Number,
-      required: true,
-    },
-
-    isSubscribed: {
-      type: Boolean,
-      default: false,
-    },
-
-    razorpayOrderId: {
+    credentialType: {
       type: String,
       required: true,
+      default: "Experience Program",
     },
 
-    razorpayPaymentId: {
+    credentialId: {
       type: String,
       required: true,
+      unique: true,
+    },
+
+    duration: {
+      type: String,
+      default: "30 Days",
     },
 
     startDate: {
@@ -51,11 +42,19 @@ const InternshipSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+
+    issueDate: {
+      type: Date,
+      required: true,
+    },
+
+   
   },
   {
     timestamps: true,
+     collection: "interndata",
   }
 );
 
-export default mongoose.models.Internship ||
-  mongoose.model("Internship", InternshipSchema);
+export default mongoose.models.Interndata ||
+  mongoose.model("Interndata", InterndataSchema);

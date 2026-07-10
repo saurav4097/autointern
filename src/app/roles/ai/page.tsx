@@ -114,7 +114,7 @@ const [timeLeft2, setTimeLeft2] = useState("");
   if (days >= 30) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-6 bg-white">
-        <h1 className="text-5xl font-bold">🎓 Internship Completed</h1>
+        <h1 className="text-5xl font-bold">🎉 Program Successfully Completed</h1>
         <button
   onClick={() => {
     window.open("/api/auth/certificate", "_blank");
@@ -378,7 +378,7 @@ const [timeLeft2, setTimeLeft2] = useState("");
     </h3>
 
     <p className="text-gray-400 text-sm mb-6">
-      Building real skills through real work.
+      Learn. Practice. Build Confidence.
     </p>
 
     {/* ICONS */}

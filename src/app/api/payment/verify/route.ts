@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
       razorpay_payment_id,
       razorpay_signature,
       role,
+      referralCode,
     } = await req.json();
 
     // Check required fields
@@ -115,6 +116,8 @@ export async function POST(req: NextRequest) {
       razorpayOrderId: razorpay_order_id,
 
       razorpayPaymentId: razorpay_payment_id,
+      
+      referralCode: referralCode || "orovenew",
 
       startDate,
 

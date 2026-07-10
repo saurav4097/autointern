@@ -1,16 +1,30 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { useSearchParams } from "next/navigation";
 import Image from 'next/image'
 export default function Home() {
   const router = useRouter();
-
+const searchParams = useSearchParams();
   const [showPopup, setShowPopup] = useState(false);
 const [selectedRole, setSelectedRole] = useState("");
 const [loading, setLoading] = useState(false);
+
+useEffect(() => {
+  const ref = searchParams.get("ref");
+
+  if (ref) {
+    const data = {
+      code: ref,
+      expiry: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 days
+    };
+
+    localStorage.setItem("oroveReferral", JSON.stringify(data));
+  }
+}, [searchParams]);
 
   const handleClick = async (role: string) => {
     const res = await fetch("/api/auth/check");
@@ -30,18 +44,33 @@ const [loading, setLoading] = useState(false);
       setShowPopup(true);
     }
   };
+  
 
   const proceedToPayment = async () => {
     setLoading(true);
+    let referralCode = "orovenew";
+
+const storedReferral = localStorage.getItem("oroveReferral");
+
+if (storedReferral) {
+  const parsed = JSON.parse(storedReferral);
+
+  if (parsed.expiry > Date.now()) {
+    referralCode = parsed.code;
+  } else {
+    localStorage.removeItem("oroveReferral");
+  }
+}
   try {
     const response = await fetch("/api/payment/create-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        role: selectedRole,
-      }),
+     body: JSON.stringify({
+  role: selectedRole,
+  referralCode,
+}),
     });
 
     const data = await response.json();
@@ -87,6 +116,7 @@ const [loading, setLoading] = useState(false);
       razorpay_signature: response.razorpay_signature,
 
       role: selectedRole,
+      referralCode,
     }),
   });
 
@@ -165,13 +195,11 @@ const [loading, setLoading] = useState(false);
         </h1>
 
         <h2 className="mt-6 text-3xl md:text-5xl font-bold leading-tight max-w-4xl">
-  Gain <span className="text-blue-600">Real Industry Experience</span>, Not Just Another Certificate
+  Become <span className="text-blue-600">Work Ready</span> Before Your First Job
 </h2>
 
         <p className="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl">
-  Work on MNC-style tasks and real-world workflows designed to simulate professional environments. 
-  Build practical experience, strengthen your resume with meaningful work, and stand out through your performance. 
-  Outstanding participants may be considered for future startup hiring opportunities.
+  Learn beyond courses through structured work simulation programs designed around real industry workflows, deadlines, reviews, and professional collaboration. Build confidence, gain practical experience, and prepare yourself for the expectations of your first job.
 </p>
 
       </section>
@@ -204,7 +232,7 @@ const [loading, setLoading] = useState(false);
 
               {/* Bottom Tag */}
               <span className="text-xs text-blue-600 font-medium self-end">
-                Internship
+                Experience Program
               </span>
             </div>
           ))}
@@ -229,15 +257,15 @@ const [loading, setLoading] = useState(false);
   <div className="p-6">
 
     <h2 className="text-2xl font-bold text-center">
-      Confirm Enrollment
+      Join the Program
     </h2>
 
     <p className="text-gray-500 text-center mt-1">
-      30-Day Internship Program
+      30-Day Industry Experience Program
     </p>
 
     <p className="text-center text-gray-500 mt-2">
-      Build real industry experience before your first job.
+      Gain confidence by working through realistic projects, deadlines, and reviews.
     </p>
 
     {/* Price */}
@@ -262,16 +290,16 @@ const [loading, setLoading] = useState(false);
       </p>
 
       <p className="font-semibold text-blue-700">
-        {selectedRole} Internship
+        {selectedRole} Experience Program
       </p>
     </div>
 
     {/* Benefits */}
     <ul className="mt-5 space-y-2 text-sm text-gray-700">
-      <li>✅ Internship Certificate</li>
+      <li>✅ Program Completion Certificate</li>
       <li>✅ Letter of Recommendation (Performance Based)</li>
-      <li>✅ Real Industry Workflow Experience</li>
-      <li>✅ Startup Hiring Opportunity via WorkHatch</li>
+      <li>✅ Professional Workflow Simulation</li>
+      <li>✅ Top Performers May Receive Hiring Opportunities</li>
     </ul>
 
     {/* Buttons */}
@@ -311,7 +339,7 @@ const [loading, setLoading] = useState(false);
         </h3>
 
         <p className="mb-6 text-sm text-gray-400">
-          Building real skills through real work.
+          Learn. Practice. Build Confidence.
         </p>
 
         {/* ICONS */}

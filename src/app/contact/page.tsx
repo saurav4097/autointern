@@ -60,26 +60,36 @@ export default function WorkHatchPage() {
           <span className="text-blue-600">OROVE</span>
         </h1>
         <p className="text-lg text-gray-600 leading-7">
-  OROVE helps students and aspiring professionals gain real industry experience through structured Internship Experience Programs inspired by the workflows of modern companies. Instead of completing random practice assignments, participants work on realistic projects, solve practical business problems, and develop the skills companies expect from job-ready candidates.
+   OROVE is a professional experience platform designed to help students and aspiring professionals become work-ready. Through structured experience programs, participants complete realistic projects, follow professional workflows, meet deadlines, receive feedback, and develop the confidence needed before entering their first internship or full-time job.
 </p>
       </header>
+      
 
       {/* About Section */}
      <section className="bg-gray-100 shadow-lg rounded-2xl p-6 max-w-3xl w-full mb-10">
+      <h2 className="text-2xl font-semibold text-blue-600 mb-4">
+Why OROVE?
+</h2>
+
+<p className="text-gray-700 leading-7">
+Many people finish courses with strong technical knowledge but little understanding of how work actually happens inside professional teams. OROVE bridges that gap by providing structured experience programs where participants practice collaborating, solving problems, meeting deadlines, documenting their work, and delivering projects in a realistic environment. It's a place to learn from mistakes, improve continuously, and build confidence before stepping into a real workplace.
+</p>
+</section>
+<section className="bg-gray-100 shadow-lg rounded-2xl p-6 max-w-3xl w-full mb-10">
   <h2 className="text-2xl font-semibold text-blue-600 mb-4">
     What We Do
   </h2>
 
   <p className="text-gray-700 leading-7 mb-4">
-    Every Internship Experience Program at OROVE is designed to simulate how real engineering and product teams work. Participants receive structured project tasks, requirements, deadlines, and professional workflows that closely resemble those used in modern companies.
+     Every OROVE Experience Program is designed around how professional engineering and product teams operate. Participants receive project briefs, technical requirements, milestones, deadlines, and structured workflows that simulate a real working environment.
   </p>
 
   <p className="text-gray-700 leading-7 mb-4">
-    Rather than spending weeks on artificial exercises, participants build practical skills by working on realistic projects that strengthen technical knowledge, problem-solving, communication, and professional thinking.
+    Instead of learning through isolated exercises, participants gain experience by solving realistic challenges, improving existing projects, documenting their work, and making decisions similar to those expected in professional teams.
   </p>
 
   <p className="text-gray-700 leading-7">
-    Upon successful completion, participants receive an Internship Certificate of Completion that reflects their project-based learning experience, helping them strengthen their resume and prepare confidently for future internship and job opportunities.
+   Upon successful completion, participants receive a Program Completion Certificate recognizing their practical project experience. The program helps strengthen portfolios, improve confidence, and prepare participants for future internships and full-time career opportunities.
   </p>
 </section>
 
@@ -90,12 +100,12 @@ export default function WorkHatchPage() {
   </h2>
 
   <ul className="space-y-3 text-gray-700">
-    <li>• Experience internship programs inspired by real company workflows</li>
-    <li>• Complete practical projects instead of theoretical assignments</li>
-    <li>• Develop industry-ready technical and problem-solving skills</li>
-    <li>• Build a portfolio through meaningful project work</li>
-    <li>• Earn an Internship Certificate of Completion</li>
-    <li>• Prepare confidently for future internships and full-time job opportunities</li>
+    <li>• Experience realistic professional workflows before joining a company</li>
+    <li>•Work on structured projects with milestones and deadlines</li>
+    <li>• Build a portfolio through practical project work</li>
+    <li>• Receive a Program Completion Certificate</li>
+    <li>• Become more confident and prepared for internships and full-time roles</li>
+    <li>• Outstanding participants may be considered for future opportunities through WorkHatch</li>
   </ul>
 </section>
 
@@ -106,7 +116,7 @@ export default function WorkHatchPage() {
   </h2>
 
   <p className="text-gray-700 mb-6 leading-7">
-    Have questions about our Internship Experience Programs, certificates, project workflows, or anything else? Send us your query, and our team will get back to you as soon as possible.
+   Have questions about our experience programs, project workflows, certificates, enrollment process, or anything else? Send us your message and our team will be happy to help.
   </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
