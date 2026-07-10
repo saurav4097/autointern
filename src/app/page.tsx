@@ -1,12 +1,10 @@
 "use client";
-
-import { useRouter } from "next/navigation";
+import { Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { useSearchParams } from "next/navigation";
-import Image from 'next/image'
-export default function Home() {
+function HomeContent() {
   const router = useRouter();
 const searchParams = useSearchParams();
   const [showPopup, setShowPopup] = useState(false);
@@ -359,5 +357,18 @@ if (storedReferral) {
       </footer>
 
     </main>
+  );
+}
+export default function Home() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
+      <HomeContent />
+    </Suspense>
   );
 }
