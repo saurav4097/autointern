@@ -2,6 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import {
+  FaLinkedin,
+  FaGlobe,
+  FaCheckCircle,
+  FaDownload,
+} from "react-icons/fa";
 
 type Credential = {
   name: string;
@@ -15,22 +21,22 @@ type Credential = {
   issueDate: string;
 };
 
-function Row({
-  label,
+function InfoCard({
+  title,
   value,
 }: {
-  label: string;
+  title: string;
   value: string;
 }) {
   return (
-    <div className="flex justify-between border-b pb-3">
-      <span className="font-medium text-gray-500">
-        {label}
-      </span>
+    <div className="rounded-xl border border-gray-200 bg-white p-4">
+      <p className="text-sm text-gray-500">
+        {title}
+      </p>
 
-      <span className="font-semibold text-gray-900 text-right">
+      <p className="mt-1 font-semibold text-gray-900 break-words">
         {value}
-      </span>
+      </p>
     </div>
   );
 }
@@ -71,112 +77,284 @@ export default function CredentialPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-lg font-medium">
-        Loading...
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+
+          <p className="mt-5 text-gray-600 font-medium">
+            Verifying Credential...
+          </p>
+        </div>
       </div>
     );
   }
 
   if (!credential) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6">
-        <h1 className="text-3xl font-bold text-red-600">
-          Credential Not Found
-        </h1>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
+        <div className="bg-white rounded-2xl shadow-lg p-10 max-w-lg w-full text-center">
 
-        <p className="mt-3 text-gray-600 text-center">
-          The credential you are looking for does not exist or may have been removed.
-        </p>
+          <div className="text-6xl mb-4">
+            ❌
+          </div>
+
+          <h1 className="text-3xl font-bold text-red-600">
+            Credential Not Found
+          </h1>
+
+          <p className="mt-4 text-gray-600 leading-7">
+            The credential you are looking for
+            does not exist or may have been removed.
+          </p>
+
+        </div>
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+    <main className="min-h-screen bg-gray-100 py-12 px-6">
 
-      <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full p-8">
+      <div className="max-w-4xl mx-auto">
 
-        <h1 className="text-3xl font-bold text-center text-blue-600">
-          OROVE Credential Verification
-        </h1>
+        {/* HEADER */}
 
-        <div className="mt-6 bg-green-100 text-green-700 rounded-xl py-3 text-center font-semibold">
-          ✅ Credential Verified
+        <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-10 py-10">
+
+            <p className="uppercase tracking-[4px] text-blue-100 text-sm">
+              Official Verification Portal
+            </p>
+
+            <h1 className="text-4xl font-bold mt-2">
+              OROVE Credential Verification
+            </h1>
+
+            <div className="mt-6 inline-flex items-center gap-3 bg-white/15 backdrop-blur px-5 py-3 rounded-full">
+
+              <FaCheckCircle className="text-green-300 text-xl" />
+
+              <span className="font-semibold">
+                Verified Digital Credential
+              </span>
+
+            </div>
+
+          </div>
+
+          {/* BODY */}
+
+          <div className="p-10">
+
+            <div className="text-center">
+
+              <h2 className="text-4xl font-bold text-gray-900">
+                {credential.name}
+              </h2>
+
+              <p className="mt-3 text-xl text-blue-600 font-semibold">
+                {credential.role}
+              </p>
+
+              <p className="mt-2 text-gray-500">
+                {credential.credentialType}
+              </p>
+
+            </div>
+
+            {/* INFO GRID */}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-10">
+
+              <InfoCard
+                title="Credential Type"
+                value={credential.credentialType}
+              />
+
+              <InfoCard
+                title="Program"
+                value={credential.role}
+              />
+
+              <InfoCard
+                title="Duration"
+                value={credential.duration}
+              />
+
+              <InfoCard
+                title="Start Date"
+                value={new Date(
+                  credential.startDate
+                ).toLocaleDateString("en-GB")}
+              />
+
+              <InfoCard
+                title="Completion Date"
+                value={new Date(
+                  credential.endDate
+                ).toLocaleDateString("en-GB")}
+              />
+
+              <InfoCard
+                title="Issue Date"
+                value={new Date(
+                  credential.issueDate
+                ).toLocaleDateString("en-GB")}
+              />
+
+            </div>
+
+            {/* Credential ID */}
+
+            <div className="mt-8 rounded-2xl border bg-gray-50 p-6">
+
+              <p className="text-sm uppercase tracking-wide text-gray-500">
+                Credential ID
+              </p>
+
+              <p className="mt-3 text-lg font-mono font-semibold break-all">
+                {credential.credentialId}
+              </p>
+
+            </div>
+
+            {/* Description */}
+
+            <div className="mt-8 rounded-2xl border p-7">
+
+              <h3 className="text-xl font-semibold">
+                Credential Details
+              </h3>
+
+              <p className="mt-4 text-gray-600 leading-8">
+                {credential.details}
+              </p>
+            </div>
+                        {/* DOWNLOAD BUTTON */}
+
+            <div className="mt-10 flex justify-center">
+
+              <button
+                onClick={() =>
+                  window.open(
+                    `/api/certificategenerate/${credential.credentialId}`,
+                    "_blank"
+                  )
+                }
+                className="
+                  flex items-center gap-3
+                  bg-blue-600
+                  hover:bg-blue-700
+                  text-white
+                  px-10
+                  py-4
+                  rounded-2xl
+                  font-semibold
+                  text-lg
+                  shadow-lg
+                  transition
+                  hover:scale-[1.02]
+                "
+              >
+
+                <FaDownload />
+
+                Download Certificate
+
+              </button>
+
+            </div>
+
+
+            {/* TRUST SECTION */}
+
+            <div className="mt-12 border-t pt-8">
+
+              <h3 className="text-center text-lg font-semibold text-gray-800">
+                Trusted & Verified By OROVE
+              </h3>
+
+
+              <p className="text-center mt-3 text-gray-500 leading-7 max-w-2xl mx-auto">
+                This digital credential has been issued by OROVE
+                and can be independently verified using the
+                credential ID provided above.
+              </p>
+
+
+              <div className="flex justify-center gap-6 mt-6">
+
+
+                <a
+                  href="https://orove.xyz"
+                  target="_blank"
+                  className="
+                    flex items-center gap-2
+                    text-gray-600
+                    hover:text-blue-600
+                    transition
+                  "
+                >
+
+                  <FaGlobe />
+
+                  Official Website
+
+                </a>
+
+
+
+                <a
+                href="https://www.linkedin.com/company/orove/"
+                  target="_blank"
+                  className="
+                    flex items-center gap-2
+                    text-gray-600
+                    hover:text-blue-600
+                    transition
+                  "
+                >
+
+                  <FaLinkedin />
+
+                  LinkedIn
+
+                </a>
+
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+          {/* FOOTER */}
+
+          <footer
+            className="
+              bg-gray-900
+              text-gray-400
+              text-center
+              py-5
+              px-6
+            "
+          >
+
+            <p className="text-sm">
+              © {new Date().getFullYear()} OROVE. All rights reserved.
+            </p>
+
+            <p className="text-xs mt-2">
+              Authentic digital credential verification system.
+            </p>
+
+          </footer>
+
+
         </div>
-
-        <div className="mt-8 space-y-4">
-
-          <Row
-            label="Name"
-            value={credential.name}
-          />
-
-          <Row
-            label="Credential Type"
-            value={credential.credentialType}
-          />
-
-          <Row
-            label="Role"
-            value={credential.role}
-          />
-
-          <Row
-            label="Duration"
-            value={credential.duration}
-          />
-
-          <Row
-            label="Start Date"
-            value={new Date(
-              credential.startDate
-            ).toLocaleDateString("en-GB")}
-          />
-
-          <Row
-            label="Completion Date"
-            value={new Date(
-              credential.endDate
-            ).toLocaleDateString("en-GB")}
-          />
-
-          <Row
-            label="Issue Date"
-            value={new Date(
-              credential.issueDate
-            ).toLocaleDateString("en-GB")}
-          />
-
-          <Row
-            label="Credential ID"
-            value={credential.credentialId}
-          />
-
-        </div>
-
-        <div className="mt-8">
-
-          <h2 className="font-semibold text-lg mb-2">
-            Description
-          </h2>
-
-          <p className="text-gray-600 leading-7">
-            {credential.details}
-          </p>
-
-        </div>
-
-        <button
-          onClick={() =>
-            window.open(
-              `/api/certificategenerate/${credential.credentialId}`,
-              "_blank"
-            )
-          }
-          className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition"
-        >
-          Download Certificate
-        </button>
 
       </div>
 
